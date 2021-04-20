@@ -12,6 +12,6 @@ editing)</li>
   <li>Registration of applications for the issuance of books</li>
 </ul>
 <p>Technology stack: <b>ASP.NET Core 3.1</b>,<b>MSSQL</b>,<b>Entity Framework Core</b>,<b>HTML5</b>,<b>CSS3</b>,<b>JavaScript</b>,<b>jQuery</b>.</p>
-<p>Link to working web app:<a href="http://samolevich-diploma.xyz/" target="_blank">samolevich-diploma.xyz</a></p>
+<p>Link to working web app: <a href="http://samolevich-diploma.xyz/" target="_blank">samolevich-diploma.xyz</a></p>
 <p>All the work was done independently.</p>
-<p><i><b>P.S.</b>Since the hosting was purchased for demonstration purposes only, the application does not have an SSL certificate.</i></p>
+<p><i><b>P.S.</b> Since the hosting was purchased for demonstration purposes only, the application does not have an SSL certificate.</i></p>
