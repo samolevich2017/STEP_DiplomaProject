@@ -1,0 +1,69 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutAdminPanel.cshtml";
+}
+
+@using LibraryProject.ViewModels;
+@model ApplicationContext;
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Читатели</title>
+    <link href="~/css/styleAdminCatalog.css" rel="stylesheet" />
+    <style>
+        td {
+            max-width: 112px;
+            text-overflow: ellipsis;
+            color: #333333;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="titleTable">
+        <h1 style="margin-left: 15px; color: #333;">Читатели</h1>
+    </div>
+    @*<div class="block_toolsPanel" style="width: 150px;">
+        <button style="width: 100%; border:none; text-align: left; padding-left: 15px; border-radius: 0.5em" id="toolPanel_Add"><b>Добавить</b><img src="~/images/add-list.svg" /></button>
+    </div>*@
+
+    <div class="block_table" style=" max-height: 500px; overflow: auto;">
+        <table style="table-layout: fixed">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th style="max-width: 150px;">Фамилия</th>
+                    <th style="max-width: 150px;">Имя</th>
+                    <th style="max-width: 150px;">Отчество</th>
+                    <th style="max-width: 150px;">Логин</th>
+                    <th style="max-width: 150px;">Почта</th>
+                    <th style="max-width: 150px;">Пароль</th>
+                    <th style="max-width: 150px;">Адрес</th>
+                    <th style="max-width: 150px;">Номер тел.</th>
+                    <th style="max-width: 80px;">Аватар</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var reader in Model.Readers) {
+
+                    <tr id="@reader.Id">
+                        <td>@reader.Id</td>
+                        <td>@reader.SurnameReader</td>
+                        <td>@reader.NameReader</td>
+                        <td>@reader.PatronymicReader</td>
+                        <td>@reader.LoginReader</td>
+                        <td>@reader.EmailReader</td>
+                        <td>@reader.PasswordReader</td>
+                        <td style="overflow:hidden;">@reader.AdressReader</td>
+                        <td>@reader.PhoneNumberReader</td>
+                        <td><img src="@reader.PhotoReaderUrl" alt="avatar"/> </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+    </div>
+    <script src="~/js/jquery-3.5.1.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,204 @@
+﻿@model LibraryProject.Models.ApplicationContext;
+@using LibraryProject.ViewModels;
+
+
+<div class="popup_title"><span id="spanTitle">Новая книга</span></div>
+<form method="post" enctype="multipart/form-data" id="formApendBook">
+    <div class="block_coverImg">
+        <img src="https://clck.ru/TSSWH" alt="фото">
+        <input type="file" accept=".jpg, .jpeg, .png, .svg" class="inputApendFile" id="formApendImage" name="uploadFile">
+        <div class="block_btnApendFile">
+            <button class="btnFile">Загрузить</button>
+        </div>
+    </div>
+
+
+    <div class="block_characteristics">
+        <h3>Свойства книги</h3>
+        <ul>
+            <li>Название<sub>............................</sub><span><input type="text" id="inputApendBookTitle" name="inputApendBookTitle" required></span></li>
+            <li>Автор<sub>...................................</sub><span><input type="text" id="inputApendBookAuthor" name="inputApendBookAuthor" required></span></li>
+            <li class="li_genres">
+                Жанр<sub>....................................</sub>
+                <button class="btnEditGenres" id="btnEditGenres" type="button"><img src="../images/edit.svg" alt=""></button>
+            </li>
+            <li>
+                Год выпуска<sub>......................</sub><span>
+                    <select name="selectApendBookYear" id="selectApendBookYear">
+                        @for (int i = 2005; i <= 2021; i++) {
+                            <option name="@i" value="@i">@i</option>
+                        }
+                    </select>
+                </span>
+            </li>
+            <li>Экземпляров<sub>...........................</sub><span><input type="number" id="inputAmountCopies" min="1" value="1" name="inputAmountCopies" value="" /></span></li>
+        </ul>
+        <div class="block_description">
+            <h3>О книге</h3>
+            <textarea name="inputApendBookDescription" id="inputApendBookDescription"></textarea>
+        </div>
+
+    </div>
+</form>
+<p style="font-size: 13px"><em style="color: red;">*</em> Для загрузки обложки, наведите курсор на изображение</p>
+<div class="block_btnGroup">
+    <button class="btnApendBook">Добавить</button>
+    <button class="btnApendCancel">Отмена</button>
+</div>
+<div class="block_genresEdit">
+    <div class="block_genresEdit_body">
+
+    </div>
+    <div class="block_genresEdit_Content">
+        <div class="genresEdit_title"><h3>Список жанров</h3></div>
+        <form action="#" class="genresEdit_Form" id="genresEdit_Form">
+            <ul class="listCheckboxGenres">
+                @foreach (var item in Model.Genres.ToList()) {
+                    <li class="list-item"><label><input type="checkbox" name="selected_genres" id="genre_@item.Id" value="@item.Id">@item.GenreName</label></li>
+                }
+            </ul>
+            <div class="groupBtnEditForm block_btnGroup">
+                <button class="btnApplyEditGenres" type="button">Применить</button>
+                <button class="btnCancelEditGenres" type="button">Отмена</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="~/js/popup.js"></script>
+<script src="~/js/popupApendBookScript.js"></script>
+<script src="~/js/toast.js"></script>
+<script>
+
+
+    $(function () {
+
+        // ----------------------- подготовка данных о жанрах для передачи на сервер
+
+        let arrSelectedApend_genres = "";
+
+        // событие клика для кнопки *Применить* (жанры)
+        $(".btnApplyEditGenres").on("click", function () {
+
+            if ($('#genresEdit_Form input:checkbox:checked').length == 0) {
+                alert("Ошибка! Книга не может не иметь жанра. Выберите жанр, либо нажмите кнопку 'Отмена'.");
+                return;
+            }
+
+            arrSelectedApend_genres = ""; // очистим массив
+
+            $('#genresEdit_Form input:checkbox:checked').each(function () {
+                arrSelectedApend_genres += `${$(this).val()},`;
+            });
+
+            // удаляем последнюю запятую
+            arrSelectedApend_genres = arrSelectedApend_genres.slice(0, -1);
+
+            console.log(arrSelectedApend_genres);
+
+            $(".block_genresEdit").removeClass("isVisible");
+            $(".block_genresEdit_Content").removeClass("openListGenres");
+
+        });
+
+        // --------------------------------- Работа с загрузкой файла ----------------------------
+
+        let formData_Fim = new FormData();
+        let strFile = "";
+        // получаем инпут file в переменную
+        const formImage = document.getElementById('formApendImage');
+
+        // слушаем изменения в инпуте file
+        formImage.addEventListener("change", function () {
+            uploadFile(formImage.files[0]);
+        });
+
+        function uploadFile(file) {
+            // проверяем тип файла
+            if (!['image/jpeg', 'image/png', 'image/svg'].includes(file.type)) {
+                alert("Разрешены только изображения.");
+                formImage.value = '';
+                return;
+            } // if
+
+            // проверим размер файла (<2 Мб)
+            if (file.size > 2 * 1024 * 1024) {
+                alert("Файл должен быть менее 2 МБ.");
+                return;
+            } // if
+
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $(".block_coverImg>img").attr("src", e.target.result);
+            };
+
+            reader.onerror = function (e) {
+                alert("Ошибка");
+            };
+
+            reader.readAsDataURL(file);
+            getBase64(file);
+
+            formData_Fim.append("fileImage", file);
+
+        } // uploadFile
+
+        function getBase64(file) {
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function () {
+                console.log(reader.result);
+                strFile = reader.result;
+            };
+            reader.onerror = function (error) {
+                console.log('Error: ', error);
+            };
+        }
+
+        // TODO: валидация формы на стороне клиента
+        $(".btnApendBook").click(function (e) {
+
+            // TODO: валидация формы
+            if (arrSelectedApend_genres.length < 1) {
+                alert("Вы не указали ни одного жанра для книги! Пожалуйста, укажите жанр и повторите попытку.");
+                return;
+            }
+
+            // Временное решение валидации
+            if ($("input[type='text']").val() == '') {
+                $("input[type='text']").addClass("invalidInput");
+                alert("Заполните все обязательные поля ввода!");
+                return;
+            }
+
+            var file_data = $("#formApendImage").prop("files")[0];
+            var form_data = new FormData();
+            form_data.append("file", strFile);
+            form_data.append("inputApendBookTitle", $("#inputApendBookTitle").val());
+            form_data.append("inputApendBookAuthor", $("#inputApendBookAuthor").val());
+            form_data.append("selectApendBookYear", $("#selectApendBookYear").val());
+            form_data.append("inputApendBookDescription", $("#inputApendBookDescription").val());
+            form_data.append("selectedApend_genres", arrSelectedApend_genres);
+            form_data.append("inputAmountCopies", $("#inputAmountCopies").val());
+
+            $.ajax({
+                url: "/Admin/AdminApendBook",
+                dataType: 'script',
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: form_data,
+                type: 'post'
+            })
+
+            $(".btnApendCancel").click();
+
+            Toast.add({
+                text: 'Книга успешно добавлена!',
+                color: '#28a745',
+                autohide: true,
+                delay: 5000
+            });
+        });
+
+    });
+</script>

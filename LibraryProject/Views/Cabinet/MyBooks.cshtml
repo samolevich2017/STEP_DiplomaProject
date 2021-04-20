@@ -1,0 +1,167 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ApplicationContext context = new ApplicationContext();
+}
+
+
+@using LibraryProject.Models;
+@using LibraryProject.ViewModels;
+@model Readers;
+<link href="~/css/styleBook.css" rel="stylesheet" />
+<style>
+    /* -------------------------------------------------------- */
+    .shelf {
+        margin: 30px 30px 0px 30px;
+        overflow-y: hidden;
+        overflow-x: auto;
+    }
+
+        .shelf:last-child {
+            margin-bottom: 30px;
+        }
+
+    .shelf_title {
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+
+    .books {
+        display: inline-flex;
+        padding: 5px;
+    }
+
+    .bookCover {
+        position: relative;
+        height: 170px;
+        width: 125px;
+    }
+
+    .bookCard {
+        box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
+        max-width: 125px;
+        text-align: center;
+        font-family: arial;
+        background-color: #f7fbfc;
+        margin-left: 15px;
+        cursor: pointer;
+    }
+
+
+        .bookCard:first-child {
+            margin: 0;
+        }
+
+        .bookCard > p {
+            font-size: 14px;
+            height: 20px;
+            line-height: 20px;
+            margin-top: -3px;
+        }
+
+    .bookButtons > button {
+        height: 25px;
+        line-height: 23px;
+        width: 80%;
+        padding: 0;
+    }
+</style>
+<div class="shelf_books">
+    <!-- Ожидают выдачи -->
+    <div class="shelf shelf_waitLend">
+        <div class="shelf_title">Ожидают выдачи</div>
+        <div class="books">
+            @foreach (var book in context.ReadersShelfs.Select(o => o).Where(s => s.IdReader == Model.Id && s.IdCategoryShelf == 3).ToList()) {
+                Books nbook = context.Books.Find(book.IdBook);
+                <div id="@book.IdBook" class="bookCard">
+                    <!-- Обложка -->
+                    <div class="bookCover">
+                        <a>
+                            <img src="@BooksViewModel.CreateScrAttrForImg(nbook.CoverImgUrl)" alt="2">
+                            <div class="bookButtons">
+                                <button class="button" formmethod="post">Подробнее</button>
+                            </div>
+                            <p class="bookTitle" style="font-size: 14px;">@nbook.Title</p>
+                        </a>
+                    </div>
+                    <div class="bookAuthor">
+                        <p></p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <!-- Забронировано -->
+    <div class="shelf shelf_booking">
+        <div class="shelf_title">Забронировано</div>
+        <div class="books">
+            @foreach (var book in context.ReadersShelfs.Select(o => o).Where(s => s.IdReader == Model.Id && s.IdCategoryShelf == 2).ToList()) {
+                Books nbook = context.Books.Find(book.IdBook);
+                <div id="@book.IdBook" class="bookCard">
+                    <!-- Обложка -->
+                    <div class="bookCover">
+                        <a>
+                            <img src="@BooksViewModel.CreateScrAttrForImg(nbook.CoverImgUrl)" alt="2">
+                            <div class="bookButtons">
+                                <button class="button" formmethod="post">Подробнее</button>
+                            </div>
+                            <p class="bookTitle" style="font-size: 14px;">@nbook.Title</p>
+                        </a>
+                    </div>
+                    <div class="bookAuthor">
+                        <p></p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <!-- Читаю -->
+    <div class="shelf shelf_reading">
+        <div class="shelf_title">Читаю</div>
+        <div class="books">
+            @foreach (var book in context.ReadersShelfs.Select(o => o).Where(s => s.IdReader == Model.Id && s.IdCategoryShelf == 4).ToList()) {
+                Books nbook = context.Books.Find(book.IdBook);
+                <div id="@book.IdBook" class="bookCard">
+                    <!-- Обложка -->
+                    <div class="bookCover">
+                        <a>
+                            <img src="@BooksViewModel.CreateScrAttrForImg(nbook.CoverImgUrl)" alt="2">
+                            <div class="bookButtons">
+                                <button class="button" formmethod="post">Подробнее</button>
+                            </div>
+                            <p class="bookTitle" style="font-size: 14px;">@nbook.Title</p>
+                        </a>
+                    </div>
+                    <div class="bookAuthor">
+                        <p></p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <!-- Прочитано -->
+    <div class="shelf shelf_read">
+        <div class="shelf_title">Прочитано</div>
+        <div class="books">
+            @foreach (var book in context.ReadersShelfs.Select(o => o).Where(s => s.IdReader == Model.Id && s.IdCategoryShelf == 1).ToList()) {
+                Books nbook = context.Books.Find(book.IdBook);
+                <div id="@book.IdBook" class="bookCard">
+                    <!-- Обложка -->
+                    <div class="bookCover">
+                        <a>
+                            <img src="@BooksViewModel.CreateScrAttrForImg(nbook.CoverImgUrl)" alt="2">
+                            <div class="bookButtons">
+                                <button class="button" formmethod="post">Подробнее</button>
+                            </div>
+                            <p class="bookTitle" style="font-size: 14px;">@nbook.Title</p>
+                        </a>
+                    </div>
+                    <div class="bookAuthor">
+                        <p></p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

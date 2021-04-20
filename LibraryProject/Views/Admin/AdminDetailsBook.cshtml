@@ -1,0 +1,239 @@
+﻿@model LibraryProject.ViewModels.BooksEditViewModel
+@using LibraryProject.ViewModels;
+
+
+<div class="popup_title"><span id="spanTitle">@Model.SelectedBook.Title</span> | <span id="spanAuthor">@Model.SelectedBook.Author.SurnameNp</span></div>
+<form method="post" enctype="multipart/form-data">
+    <div class="block_coverImg">
+        <img src="@BooksViewModel.CreateScrAttrForImg(Model.SelectedBook.CoverImgUrl)" alt="фото">
+        <input type="file" accept=".jpg, .jpeg, .png, .svg" class="inputFile" id="formImage" name="uploadFile" disabled>
+        <div class="block_btnFile">
+            <button class="btnFile">Загрузить</button>
+        </div>
+    </div>
+
+
+    <div class="block_characteristics">
+        <h3>Свойства книги</h3>
+        <ul>
+            <li>Название<sub>............................</sub><span><input type="text" id="inputBookTitle" name="inputBookTitle" value="@Model.SelectedBook.Title" disabled required></span></li>
+            <li>Автор<sub>...................................</sub><span><input type="text" id="inputBookAuthor" name="inputBookAuthor" value="@Model.SelectedBook.Author.SurnameNp" disabled required></span></li>
+            <li class="li_genres">
+                Жанр<sub>....................................</sub>
+                <ul class="list_genresBook detailsGenres">
+                    @foreach (var genre in ViewBag.Genres) {
+                        <li>@genre</li>
+                    }
+                </ul>
+                <button class="btnEditGenres" id="btnEditGenres" type="button"><img src="../images/edit.svg" alt=""></button>
+            </li>
+            <li>
+                Год выпуска<sub>......................</sub><span>
+                    <select name="selectBookYear" id="selectBookYear" disabled>
+                        @for (int i = 2005; i <= 2021; i++) {
+                            int value;
+                            int.TryParse(string.Join("", Model.SelectedBook.YearOfIssue.Where(c => char.IsDigit(c))), out value);
+                            bool flag = i == value ? true : false;
+                            <option name="@i" value="@i" selected="@flag">@i</option>
+                        }
+                    </select>
+                </span>
+            </li>
+            <li>Код книги<sub>...........................</sub><span>@Model.SelectedBook.Id</span></li>
+        </ul>
+        <div class="block_description">
+            <h3>О книге</h3>
+            <textarea name="inputBookDescription" id="inputBookDescription" disabled>@Model.SelectedBook.DescriptionBook</textarea>
+        </div>
+
+    </div>
+</form>
+<p class="tooltip_AboutFile"><em style="color: red;">*</em> Для загрузки обложки, наведите курсор на изображение</p>
+<div class="block_btnGroup">
+    <button class="btnSaveChanges" disabled>Сохранить</button>
+    <button class="btnEdit">Изменить</button>
+    @*<button class="btnDelete">Удалить</button>*@
+    <button class="btnCancel">Отмена</button>
+</div>
+<div class="block_genresEdit">
+    <div class="block_genresEdit_body">
+
+    </div>
+    <div class="block_genresEdit_Content">
+        <div class="genresEdit_title"><h3>Список жанров</h3></div>
+        <form action="#" class="genresEdit_Form" id="genresEdit_Form">
+            <ul class="listCheckboxGenres">
+                @foreach (var item in Model.context.Genres) {
+                    // код определяющий к каким жанрам относится книга, чтобы отметить те жанры, которые у книги уже есть
+                    bool flagChecked = false;
+                    List<BooksGenres> bgs = Model.SelectedBook.BooksGenres.Select(o => o).ToList(); // получим записи об id книги и жанров
+                    foreach (var bg in bgs) {
+                        if (bg.GenreId == item.Id) {
+                            flagChecked = true;
+                        }
+                    } // foreach
+                    <li class="list-item"><label><input type="checkbox" name="selected_genres" id="genre_@item.Id" value="@item.Id" checked="@flagChecked">@item.GenreName</label></li>
+                }
+            </ul>
+            <div class="groupBtnEditForm block_btnGroup">
+                <button class="btnApplyEditGenres" type="button">Применить</button>
+                <button class="btnCancelEditGenres" type="button">Отмена</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="~/js/popup.js"></script>
+<script src="~/js/popupEditBookScript.js"></script>
+<script>
+
+
+    $(function () {
+
+        // ----------------------- подготовка данных о жанрах для передачи на сервер
+
+        let arrSelected_genres = "";
+
+        // событие клика для кнопки *Применить* (жанры)
+        $(".btnApplyEditGenres").on("click", function () {
+
+            if ($('#genresEdit_Form input:checkbox:checked').length == 0) {
+                alert("Ошибка! Книга не может не иметь жанра. Выберите жанр, либо нажмите кнопку 'Отмена'.");
+                return;
+            }
+
+            arrSelected_genres = ""; // очистим массив
+
+            $('#genresEdit_Form input:checkbox:checked').each(function () {
+                arrSelected_genres += `${$(this).val()},`;
+            });
+
+            // удаляем последнюю запятую
+            arrSelected_genres = arrSelected_genres.slice(0, -1);
+
+            console.log(arrSelected_genres);
+
+            $(".block_genresEdit").removeClass("isVisible");
+            $(".block_genresEdit_Content").removeClass("openListGenres");
+
+        });
+
+        // --------------------------------- Работа с загрузкой файла ----------------------------
+
+        let formData_Fim = new FormData();
+        let strFile = "";
+
+        // получаем инпут file в переменную
+        const formImage = document.getElementById('formImage');
+
+        // слушаем изменения в инпуте file
+        formImage.addEventListener("change", function () {
+            uploadFile(formImage.files[0]);
+        });
+
+        function uploadFile(file) {
+            // проверяем тип файла
+            if (!['image/jpeg', 'image/png', 'image/svg'].includes(file.type)) {
+                alert("Разрешены только изображения.");
+                formImage.value = '';
+                return;
+            } // if
+
+            // проверим размер файла (<2 Мб)
+            if (file.size > 2 * 1024 * 1024) {
+                alert("Файл должен быть менее 2 МБ.");
+                return;
+            } // if
+
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $(".block_coverImg>img").attr("src", e.target.result);
+            };
+
+            reader.onerror = function (e) {
+                alert("Ошибка");
+            };
+
+            
+
+            reader.readAsDataURL(file);
+            getBase64(file);
+
+            formData_Fim.append("fileImage", file);
+
+        } // uploadFile
+
+        function getBase64(file) {
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function () {
+                console.log(reader.result);
+                strFile = reader.result;
+            };
+            reader.onerror = function (error) {
+                console.log('Error: ', error);
+            };
+        }
+
+        // var file = document.querySelector('#files > input[type="file"]').files[0];
+
+        // let strFile = getBase64(formData_Fim.get("fileImage")); // prints the base64 string
+
+        // событие клика по кнопке - сохранить
+        $(".btnSaveChanges").click(function (e) {
+
+            var file_data = $("#formImage").prop("files")[0];
+            var form_data = new FormData();
+            
+            form_data.append("file", strFile);
+            form_data.append("id", @Model.SelectedBook.Id);
+            form_data.append("inputBookTitle", $("#inputBookTitle").val());
+            form_data.append("inputBookAuthor", $("#inputBookAuthor").val());
+            form_data.append("selectBookYear", $("#selectBookYear").val());
+            form_data.append("inputBookDescription", $("#inputBookDescription").val());
+            form_data.append("selected_genres", arrSelected_genres);
+
+            $.ajax({
+                url: "/Admin/AdminDetailsBookEdit",
+                dataType: 'script',
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: form_data,
+                type: 'post'
+            })
+
+            $("#spanTitle").text($("#inputBookTitle").val());
+
+            $("input[type='text'], #selectBookYear, textarea").attr("disabled", true);
+            $(".tooltip_AboutFile").removeClass("tooltip_aboutFileVisible");
+            $("input[type='file']").attr("disabled", true);
+            $(".btnSaveChanges").attr("disabled", true);
+            $("#btnEditGenres").hide();
+        });
+
+        // событие клика по кнопке - удалить
+        $(".btnDelete").on("click", function () {
+
+            if (!confirm("Вы действительно хотите удалить данную книгу из каталога?")) {
+                return;
+            } else {
+
+                var formData = new FormData();
+                formData.append("id", @Model.SelectedBook.Id);
+                $.ajax({
+                    url: "/Admin/AdminRemoveBook",
+                    dataType: 'script',
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    data: formData,
+                    type: 'post'
+                });
+
+                popupClose(popupEdit);
+            }
+
+        });
+
+    });
+</script>

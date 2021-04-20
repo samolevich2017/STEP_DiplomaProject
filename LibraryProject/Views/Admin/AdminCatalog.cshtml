@@ -1,0 +1,154 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutAdminPanel.cshtml";
+}
+
+@using LibraryProject.ViewModels;
+@model BooksViewModel;
+@addTagHelper *, LibraryProject
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Каталог</title>
+    <link href="~/css/styleAdminCatalog.css" rel="stylesheet" />
+    <link href="~/css/stylePopup.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="titleTable">
+        <h1 style="margin-left: 15px; color: #333;">Каталог <b style="font-size: 14px">(@ViewBag.CatalogLenght)</b></h1>
+    </div>
+    <div class="block_toolsPanel">
+        <button style="width: 130px; text-align: left; padding-left: 15px;" id="toolPanel_Import"><b>Импорт</b><img src="~/images/import.svg" /></button>
+        <button style="width: 150px; text-align: left; padding-left: 15px;" id="toolPanel_Add"><b>Добавить</b><img src="~/images/add-list.svg" /></button>
+        <img src="~/images/sort.svg" style="height: 100%; width: 25px" alt="">
+        <form method="post">
+            <select name="sortTableBook" id="sortTable" onchange="this.form.submit()">
+                <option value="sort_default">По умолчанию</option>
+                <option value="sort_from_A_to_Z">По названию</option>
+                <option value="sort_authors_A_to_Z">По автору</option>
+                <option value="sort_from_New_to_Old">По году выпуска</option>
+            </select>
+        </form>
+    </div>
+
+    <div class="block_table">
+        <table>
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th style="max-width: 150px;">Название</th>
+                    <th style="max-width: 120px;">Автор</th>
+                    <th style="max-width: 220px;">Описание</th>
+                    <th style="max-width: 140px;">Жанр</th>
+                    <th style="max-width: 60px;">Год выпуска</th>
+                    <th style="max-width: 100px;">Изображение</th>
+                    <th style="max-width: 60px;">Всего (шт.)</th>
+                    <th style="max-width: 60px;">Свободно (шт.)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var book in Model.Books) {
+
+                    <tr id="@book.Id">
+                        <td>@book.Id</td>
+                        <td>@book.Title</td>
+                        <td>@book.Author.SurnameNp</td>
+                        <td class="td_description">@book.DescriptionBook</td>
+                        <td class="td_list">
+                            <ul class="list_genresBook">
+                                @foreach (var genre in book.BooksGenres.ToList()) {
+                                    <li>@genre.Genre.GenreName</li>
+                                }
+                            </ul>
+                        </td>
+                        <td style="max-width: 100px;">@book.YearOfIssue</td>
+                        <td style="max-width: 100px;"><img src="@BooksViewModel.CreateScrAttrForImg(book.CoverImgUrl)" alt=""></td>
+                        <td style="max-width: 60px;">@book.Copies.Amount</td>
+                        <td style="max-width: 60px;">@book.Copies.AmountFreeCopies</td>
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+    </div>
+    <page-link page-model="Model.PageViewModel" page-action="AdminCatalog"></page-link>
+    <div id="popup_book" class="popup">
+        <div class="popup_body">
+            <div class="popup_content">
+                <a href="#" class="popup_close close-popup">X</a>
+                <div class="content-detail">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="popup_apendBook" class="popup">
+        <div class="popup_body">
+            <div class="popup_content">
+                <a href="#" class="popup_close close-popup">X</a>
+                <div class="content-apend">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="popup_importBooks" class="popup">
+        <div class="popup_body">
+            <div class="popup_content" style="width: 60%";>
+                <a href="#" class="popup_close close-popup">X</a>
+                <div class="content-DragDropFile">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/js/jquery-3.5.1.min.js"></script>
+    <script src="~/js/popup.js"></script>
+    <script src="~/js/popupEditBookScript.js"></script>
+    <script src="~/js/adminCatalogScript.js"></script>
+    <script src="~/js/popupImportBooksScript.js"></script>
+    <script type="text/javascript">
+
+
+        $(function () {
+            let popupApend = document.getElementById("popup_apendBook");
+
+            $.ajaxSetup({ cache: false });
+
+            // событие клика по строке таблицы (вызывает модальное окно с инфой обьекта)
+           $("tr").click(function (e) {
+
+               e.preventDefault();
+               $.get("@Url.Action("AdminDetailsBook")", { id: this.id }, function (data) {
+                   $('.content-detail').html(data);
+               });
+               popupOpen(popupEdit);
+           });
+
+            // событие клика по кнопке добавить в панели инструментов (вызывает модальное окно с формой добавления)
+            $("#toolPanel_Add").click(function (e) {
+                e.preventDefault();
+                $.get("@Url.Action("AdminApendBook")", function (data) {
+                    $('.content-apend').html(data);
+                });
+                popupOpen(popupApend);
+            });
+
+            // событие клика по кнопке добавить в панели инструментов (вызывает модальное окно с формой добавления)
+            $("#toolPanel_Import").click(function (e) {
+                e.preventDefault();
+                $.get("@Url.Action("AdminImportBooks")", function (data) {
+                    $('.content-DragDropFile').html(data);
+                });
+                popupOpen(popup_importBooks);
+            });
+        })
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,55 @@
+﻿@{
+    ViewData["Title"] = "Авторизация";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Авторизация</title>
+    <link rel="stylesheet" href="~/css/style.css">
+    <link rel="stylesheet" href="~/css/styleBooks.css">
+    <link rel="stylesheet" href="~/css/styleAuthorization.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <style>
+        .footer{
+            margin-top: 100px;
+        }
+    </style>
+</head>
+<body>
+    
+        <div class="block__form__Log" id="block__form__Log" style="height: 360px;">
+            <div class="title_form">
+                <h1>Авторизация</h1>
+            </div>
+            <hr />
+            <div class="form">
+                <form class="formLogIn" asp-controller="Cabinet" asp-action="Authorization" method="post">
+                    <div class="fields">
+                        <div class="field_Email fieldsInp">
+                            <span>&#128231;</span>
+                            <input type="email" name="email" id="email" placeholder="E-mail" required/>
+                        </div>
+                        <div class="field_Password fieldsInp">
+                            <span>&#128273;</span>
+                            <input type="password" name="password" id="password" placeholder="Пароль" required/>
+                        </div>
+                        @*<div class="checkbox_remember">
+                            <label id="lbRememberCheckBox" for="remember_Checkbox">Запомнить</label>
+                            <input id="remember_Checkbox" type="checkbox">
+                        </div>*@
+                        <div class="btnLogIn">
+                            <button class="btnLog" type="submit">Войти</button>
+                        </div>
+                    </div>
+                    <span class="orSpan" style="display: flex; justify-content: center; font-size: 13px">или</span>
+                    <a type="button" class="btnSignUp" id="btnSwapToSignUp" style="margin-top: 16px" asp-controller="Cabinet" asp-action="Register">Регистрация</a>
+                </form>
+            </div>
+        </div>
+    <!-- Скрипт для форм -->
+    <script src="~/js/jquery-3.5.1.min.js"></script>
+</body>
+</html>

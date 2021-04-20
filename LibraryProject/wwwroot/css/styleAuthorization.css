@@ -1,0 +1,291 @@
+﻿.block__form__Log{
+    display: block;
+    margin: 0 auto;
+    margin-top: 100px;
+    margin-bottom: 50px;
+    border-radius: 5%;
+    border: #333c solid 2px;
+    min-width: 295px;
+    width: 380px;
+    max-width: 100%;
+    height: 400px;
+    background-color: whitesmoke;
+}
+
+.title_form{
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: #333c;
+    padding: 3px 0;
+    max-width: 100%;
+}
+
+.field_Email,
+.field_Password,
+.field_Login{
+    position: relative;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: center;
+    width: 80%;
+}
+
+.field_Email span,
+.field_Password span,
+.field_Login span{
+    position: absolute;
+    display: flex;
+    left: 15px;
+    line-height: 40px;
+}
+
+
+.form{
+    margin-top: 30px;
+    display: block;
+}
+
+.form input[type="email"],
+.form input[type="password"],
+.form input[type="text"]{
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    padding: 5px 0 5px 45px;
+    outline: none;
+    font-size: 14px;
+    border: none;
+    border-radius: 60px;
+    color: #333c;
+    font-weight: bold;
+}
+
+.form input[type="email"]:focus,
+.form input[type="password"]:focus,
+.form input[type="text"]:focus{
+    border: #95caf9 solid 1px;
+    box-shadow: #95caf9 0 0 10px;
+}
+
+.fieldsInp{
+    grid-column-start: 1;
+    grid-column-end: 4;
+}
+
+.fields{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-row: 3;
+    justify-items: center;
+}
+
+.checkbox_remember,
+.checkbox_notRobot{
+    position: relative;
+    display: inline-block;
+    height: 25px;
+    width: 80%;
+    margin-top: 10px;
+    margin-left: 42px;
+}
+
+.checkbox_remember input,
+.checkbox_notRobot input{
+    position: absolute;
+    border: none;
+    background: #333333;
+    outline: none;
+    left: 0;
+}
+
+.checkbox_remember input::before,
+.checkbox_notRobot input::before{
+    content: '';
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    margin-top: -4px;
+    margin-left: -4px;
+}
+
+.checkbox_remember input::after,
+.checkbox_notRobot input::after{
+    content: none;
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    height: 6px;
+    width: 9px;
+    border-left: 2px solid;
+    border-bottom: 2px solid;
+    transform: rotate(-45deg);
+    border-color: #fff;
+}
+
+.checkbox_remember input:checked::after,
+.checkbox_notRobot input:checked::after{
+    content: '';
+}
+
+.checkbox_remember input:checked::before,
+.checkbox_notRobot input:checked::before{
+    background-color: #95caf9;
+}
+
+.checkbox_remember label,
+.checkbox_notRobot label{
+    margin-left: 25px;
+}
+
+.checkbox_remember label:hover,
+.checkbox_notRobot label:hover{
+    cursor: pointer;
+    color: #95caf9;
+}
+
+.btnLog{
+    cursor: pointer;
+    text-transform: uppercase;
+    margin-top: 3px;
+    margin-left: 10px;
+    width: 100px;
+    height: 35px;
+    border-radius: 25px;
+    background-color: #95caf9;
+    color: #fff;
+    border:none;
+    outline: none;
+    margin-bottom: 10px;
+}
+
+.orSpan::before{
+    content: "";
+    position: absolute;
+    margin-top: 10px;
+    display: inline-block;
+    border-bottom: 2px solid #333333;
+    height: 5px;
+    width: 50px;
+}
+
+.authMethodsList{
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    text-align: center;
+    padding-left: 15px;
+}
+
+.authMethodListItem{
+    position: relative;
+    margin-right: 15px;
+    height: 35px;
+    border-radius: 25px;
+    width: 35px;
+    background: none;
+}
+
+.authMethodListItem button{
+    background: none;
+    cursor: pointer;
+    height: 100%;
+    width: 100%;
+    border-radius: 25px;
+    border: none;
+    padding: 0;
+    outline: none;
+}
+
+.authMethodListItem button img{
+    width: 100%;
+    overflow: hidden;
+}
+
+.btnLog:hover,
+.authMethodListItem:hover{
+    box-shadow: #769fcd 0 0 10px;
+}
+
+.btnSignUp {
+    display: block;
+    margin: 0 auto;
+    cursor: pointer;
+    text-transform: uppercase;
+    width: 160px;
+    height: 25px;
+    border-radius: 25px;
+    background-color: #95caf9;
+    color: #fff;
+    border: none;
+    outline: none;
+    text-align: center;
+    text-decoration: none;
+    padding-top: 7px;
+}
+
+.btnSignUp:hover,
+.btnSignUpSubmit:hover{
+    box-shadow: #769fcd 0 0 10px;
+}
+
+.btnSignUpSubmit{
+    display: block;
+    margin: 0 auto;
+    cursor: pointer;
+    text-transform: uppercase;
+    width: 180px;
+    height: 35px;
+    border-radius: 25px;
+    background-color: #95caf9;
+    color: #fff;
+    border:none;
+    outline: none;
+    margin-top: 10px;
+}
+
+.btnSwapToLogInForm button{
+    display: block;
+    margin: 0 auto;
+    border: none;
+    background: none;
+    cursor: pointer;
+    margin-top: 5px;
+    text-transform: uppercase;
+    color: #333333;
+    outline: none;
+}
+
+.btnSwapToLogInForm button:hover{
+    color: #769fcd;
+}
+
+.btnSwapToLogInForm button:active{
+    color: #95caf9;
+}
+
+
+@media (max-width: 425px){
+    .title_form{
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: #333c;
+        padding: 0;
+        max-width: 100%;
+        font-size: 14px;
+    }
+
+    .block__form__Log {
+        border-radius: 13%;
+    }
+}
+
+@media (max-width: 767px) {
+    .block__form__Log {
+        margin-top: 25px;
+        border-radius: 8%;
+    }
+}

@@ -1,0 +1,97 @@
+﻿<head>
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
+    <link rel="stylesheet" href="~/css/style.css">
+    <link rel="stylesheet" href="~/css/styleBooks.css">
+    <link rel="stylesheet" href="~/css/styleAuthorization.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <style>
+        .footer {
+            margin-top: 100px;
+        }
+        .passwordValid{
+            border: green solid 2px;
+            box-shadow: green 0 0 5px;
+        }
+
+        .passwordInvalid {
+            border: red solid 2px;
+            box-shadow: red 0 0 5px;
+        }
+
+        .block_message {
+            display: flex;
+            justify-content: center;
+            font-size: 12px;
+            letter-spacing: 1px;
+            margin-top: -25px;
+            color: red;
+            border-radius: 25px;
+            background: #ff000030;
+            margin-right: 30px;
+            margin-left: 30px;
+        }
+    </style>
+</head>
+<div class="block__form__Log" id="block__form__Log" style="height:510px; margin-top: 50px">
+    <div class="title_form">
+        <h1>Регистрация</h1>
+    </div>
+    @{
+        if(ViewBag.Message != ""){
+        <div class="block_message">
+            <p>@ViewBag.Message</p>
+        </div>
+        }
+    }
+    <hr />
+    <div class="form">
+        <form class="formSignUp" asp-controller="Cabinet" asp-action="Register" method="post">
+            <div class="fields">
+                <div class="field_Login fieldsInp">
+                    <span>&#9997;</span>
+                    <input type="text" name="surnameNP" id="surnameNP" placeholder="ФИО" required>
+                </div>
+                <div class="field_Login fieldsInp">
+                    <span>&#128100;</span>
+                    <input type="text" name="login" id="login" placeholder="Логин" required>
+                </div>
+                <div class="field_Email fieldsInp">
+                    <span>&#128231;</span>
+                    <input type="email" name="email" id="email" placeholder="E-mail" required />
+                </div>
+                <div class="field_Password fieldsInp">
+                    <span>&#128273;</span>
+                    <input type="password" name="password" id="password" placeholder="Пароль" required />
+                </div>
+                <div class="field_Password fieldsInp">
+                    <span>&#128273;</span>
+                    <input type="password" name="confirm_password" id="confirm_password" placeholder="Подтверждение пароля" required />
+                </div>
+                @*<div class="checkbox_notRobot fieldsInp" style="margin-left: 0px;">
+                    <label id="lbNotRobot_Checkbox" for="notRobot_Checkbox">Я не робот</label>
+                    <input id="notRobot_Checkbox" type="checkbox" required>
+                </div>*@
+            </div>
+            <div class="btnSignUpSubmitDiv">
+                <button class="btnSignUpSubmit" type="submit">Зарегистрироваться</button>
+            </div>
+            <div class="btnSwapToLogInForm" style="text-align: center; padding-top: 5px; color: #333;">
+                <a id="btnSwapToLogIn" style="text-decoration: none;" type="button" asp-controller="Cabinet" asp-action="Authorization">вход</a>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="~/js/jquery-3.5.1.min.js"></script>
+<script>
+    $('#password, #confirm_password').on('change', function (e) {
+        if ($('#password').val().length > 0 && $('#confirm_password').val().length > 0 && $('#password').val() == $('#confirm_password').val()) {
+            $('#password, #confirm_password').removeClass("passwordInvalid");
+            $('#password, #confirm_password').addClass("passwordValid");
+        } else {
+            $('#password, #confirm_password').removeClass("passwordValid");
+            $('#password, #confirm_password').addClass("passwordInvalid");
+        }
+    });
+</script>

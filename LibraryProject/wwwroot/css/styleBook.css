@@ -1,0 +1,678 @@
+﻿/* Стили для фильтра книг по критериям */
+.filterBlock {
+    left: 0;
+    float: left;
+    position: relative;
+    margin-left: 50px;
+    margin-right: 50px;
+    height: 37.5em;
+    width: 300px;
+    text-align: center;
+    border: #333c solid 2px;
+    background: rgba(219, 219, 219, 0.45);
+    padding: 0;
+}
+
+.block_titleFilter {
+    position: relative;
+}
+
+.toStartEnd {
+    width: auto;
+    cursor: pointer;
+    height: 25px;
+    line-height: 25px;
+    background: whitesmoke;
+    margin-right: 15px;
+    padding: 2px;
+    text-align: center;
+    border: #333 solid 2px;
+    border-radius: 0.2em;
+    font-weight: bold;
+}
+
+
+.filterBlock h3 {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 28px;
+    width: 100%;
+    color: #333c;
+    line-height: 40px;
+    position: relative;
+    background-image: url("../img/bgHeader.jpg");
+    background-color: rgba(159, 159, 159, 0.88);
+}
+
+/* Стили строки поиска книг */
+.bookSearchForm input[type='search']::-webkit-search-cancel-button {
+    display: none;
+}
+
+.bookSearchForm {
+    width: 100%;
+    position: relative;
+    height: 40px;
+    max-height: 40px;
+    grid-column-start: 1;
+    grid-column-end: 5;
+    grid-row: 1;
+}
+
+
+    .bookSearchForm input {
+        color: #333c;
+        border: #333c solid 2px;
+        background-color: whitesmoke;
+        text-transform: none;
+        outline: none;
+        display: block;
+        margin: 0 auto;
+        padding-left: 10px;
+        width: 100%;
+        height: 100%;
+        line-height: 40px;
+        font-size: 16px;
+        font-weight: normal;
+    }
+
+    .bookSearchForm button {
+        cursor: pointer;
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 100%;
+        width: 10em;
+        font-size: 14px;
+        text-transform: uppercase;
+        font-weight: bold;
+        border: none;
+        color: #dcce84;
+        background-color: rgba(34, 34, 34, 0.88);
+    }
+
+        .btnApply:hover,
+        .block_mobileFilterBtn button:hover,
+        .bookSearchForm button:hover {
+            color: #ead39d;
+            background-color: #222222;
+        }
+
+        .btnApply:active,
+        .bookSearchForm button:active {
+            color: #c0a97a;
+            background-color: #333333;
+        }
+
+.wrapper__books {
+    display: grid;
+    position: relative;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-column-gap: 25px;
+    grid-row-gap: 1em;
+    margin-right: 30px;
+    justify-items: center;
+}
+
+.block_sorts {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    display: flex;
+    justify-self: left;
+    font-size: 14px;
+    height: 30px;
+    width: 200px;
+}
+
+    .block_sorts select {
+        display: inline-flex;
+        align-items: center;
+        width: 100%;
+        max-width: 100%;
+        height: 32px;
+        margin: 0;
+        padding-left: 10px;
+        padding-right: 40px;
+        border: 2px solid #333c;
+        box-sizing: border-box;
+        outline: #dcce84;
+        overflow: hidden;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        background-color: whitesmoke;
+        background-image: url("../img/books/expand-button.png");
+        background-size: 14px 14px;
+        background-repeat: no-repeat,repeat;
+        background-position: right 12px center;
+        text-align: left;
+        font-size: 14px;
+        color: #333c;
+        cursor: pointer;
+    }
+
+.block_mobileFilterBtn {
+    grid-column-start: 3;
+    grid-column-end: 5;
+    justify-self: left;
+    width: 90px;
+}
+
+    .block_mobileFilterBtn button {
+        display: none;
+        align-items: center;
+        width: 100%;
+        max-width: 100%;
+        height: 32px;
+        margin: 0;
+        border: 2px solid #333c;
+        box-sizing: border-box;
+        outline: #dcce84;
+        background-color: #333333;
+        background-image: url("../img/books/filter.png");
+        background-size: 14px 14px;
+        background-repeat: no-repeat,repeat;
+        background-position: right 10px center;
+        text-align: left;
+        padding-left: 10px;
+        font-size: 14px;
+        color: #dcce84;
+        cursor: pointer;
+    }
+
+.block_resetFilterBtn {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    justify-self: left;
+}
+
+    .block_resetFilterBtn button {
+        width: 100%;
+        max-width: 100%;
+        height: 32px;
+        border: 2px solid #333c;
+        font-size: 14px;
+        color: #333c;
+        cursor: pointer;
+        outline: none;
+    }
+
+        .block_resetFilterBtn button:active {
+            border: 2px solid #a69963;
+        }
+
+        .block_resetFilterBtn button:hover,
+        .block_sorts select:hover,
+        .block_sorts select:active {
+            border: 2px solid #dcce84;
+        }
+
+.block_sorts select > option {
+    outline: none;
+}
+
+@media (max-width: 1483px) {
+    .wrapper__books {
+        grid-template-columns: repeat(3, 1fr);
+        grid-column-gap: 15px;
+        justify-items: center;
+        margin-right: 0;
+    }
+
+    .bookSearchForm {
+        grid-column-end: 4;
+    }
+
+
+
+    .block_sorts {
+        grid-column-end: 2;
+    }
+
+    .block_resetFilterBtn {
+        grid-column-end: 3;
+        justify-self: center;
+    }
+
+    .block_mobileFilterBtn {
+        grid-column-end: 4;
+        justify-self: right;
+    }
+}
+
+@media (max-width: 1190px) {
+    .wrapper__books {
+        grid-template-columns: repeat(3, 1fr);
+        grid-column-gap: 25px;
+        justify-items: center;
+        margin-right: 0;
+    }
+
+    .block_mobileFilterBtn button {
+        display: inline-flex;
+    }
+
+    .bookSearchForm {
+        width: 100%;
+        grid-column-end: 4;
+    }
+
+    .filterBlock {
+        display: none;
+    }
+
+    .block_sorts {
+        grid-column-end: 2;
+    }
+
+    .block_resetFilterBtn {
+        grid-column-end: 3;
+    }
+
+    .block_mobileFilterBtn {
+        grid-column-end: 4;
+    }
+}
+
+/*TODO: добавить всплывающий фильтр */
+@media (max-width: 767px) {
+    .wrapper__books {
+        grid-template-columns: repeat(3, 1fr);
+        grid-column-gap: 15px;
+        justify-items: center;
+        margin: 0;
+    }
+
+    .bookSearchForm {
+        grid-column-end: 4;
+        height: 35px;
+        width: 95%;
+    }
+
+    .block_sorts {
+        grid-column-end: 2;
+        margin-left: 1.4em;
+    }
+
+    .block_resetFilterBtn {
+        grid-column-end: 3;
+    }
+
+    .block_mobileFilterBtn {
+        grid-column-end: 4;
+        margin-right: 1.22em;
+    }
+}
+
+@media (max-width: 740px) {
+    .wrapper__books {
+        grid-template-columns: repeat(2, 1fr);
+        grid-column-gap: 15px;
+        justify-items: center;
+        margin: 0;
+    }
+
+    .bookSearchForm {
+        grid-column-end: 3;
+        height: 35px;
+        width: 95%;
+    }
+
+    .block_sorts {
+        grid-column-end: 1;
+        margin-left: 1.2em;
+    }
+
+    .block_resetFilterBtn {
+        display: none;
+    }
+
+    .block_mobileFilterBtn {
+        grid-column-end: 2;
+        justify-self: right;
+        margin-right: 1.2em;
+    }
+}
+
+@media (max-width: 535px) {
+    .wrapper__books {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+        justify-items: center;
+        margin: 0;
+    }
+
+    .bookSearchForm {
+        height: 30px;
+        grid-column-end: 1;
+    }
+
+        .bookSearchForm button {
+            width: 6em;
+        }
+
+    .block_sorts {
+        grid-column-end: 1;
+        margin-left: 2.5%;
+    }
+
+    .block_mobileFilterBtn {
+        display: flex;
+        position: absolute;
+        margin-top: 2.85em;
+        left: -100px;
+        justify-items: left;
+    }
+
+        .block_mobileFilterBtn button {
+            margin-right: -10px;
+        }
+}
+
+/* Стили для непосредственно карточки с книгой */
+.bookCard {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 250px;
+    text-align: center;
+    font-family: arial;
+    background-color: #f7fbfc;
+}
+
+.bookButtons {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, .8);
+    opacity: 0;
+    transition: .3s ease-in-out;
+}
+
+.button {
+    cursor: pointer;
+    text-decoration: none;
+    color: #c0a97a;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: bold;
+    width: 140px;
+    height: 40px;
+    line-height: 37px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border: 2px solid #c0a97a;
+    transform: translate(-50%, -50%) scale(0);
+    transition: .3s ease-in-out;
+    background: rgba(32, 32, 32, 0.59);
+}
+
+.bookCover:hover .bookButtons {
+    opacity: 1;
+}
+
+.bookCover:hover .button {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.button:hover {
+    background: black;
+}
+
+.bookCover {
+    position: relative;
+    height: 320px;
+    width: 250px;
+}
+
+    .bookCover img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .bookCover a {
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 18px;
+        color: #333c;
+    }
+
+.bookAuthor {
+    margin-top: 28px;
+    font-size: 14px;
+    color: dimgray;
+}
+
+.bookAvailable {
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 10px;
+}
+
+.bookAvailableTrue {
+    color: #769fcd;
+    background-color: #d6e6f2;
+}
+
+.bookAvailableFalse {
+    color: #f57170;
+    background-color: #f5f5f5;
+}
+
+.block_additionallyOptions input[type="checkbox"],
+.block_selectAuthor input[type="checkbox"],
+.block_selectGenres input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.block_additionallyOptions label,
+.block_selectAuthor label,
+.block_selectGenres label {
+    line-height: 30px;
+    margin-left: 15px;
+}
+
+.filterBlock h2 {
+    font-size: 22px;
+    left: 0;
+    color: #333;
+    position: relative;
+}
+
+    .filterBlock h2:before {
+        content: "";
+        position: absolute;
+        width: 50%;
+        background: #dcce84;
+        border: #dcce84 solid 1px;
+        left: 25%;
+        margin-top: 23px;
+    }
+
+.block_selectAuthor,
+.block_selectGenres {
+    width: 98%;
+    max-height: 115px;
+    overflow-y: scroll;
+    text-align: left;
+    margin-right: 5px;
+}
+
+.block_additionallyOptions {
+    text-align: left;
+}
+
+#selectYearRange {
+    width: 80%;
+}
+
+#loYear {
+    margin-right: 5px;
+}
+
+.block_selectYearRange p {
+    text-align: center;
+    margin-top: 7px;
+    color: #333;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+
+    .block_selectYearRange p > em {
+        color: #dcce84;
+        font-size: 16px;
+    }
+
+    .block_selectYearRange p > span {
+        margin-left: 5px;
+    }
+
+.btnApply {
+    cursor: pointer;
+    position: relative;
+    margin-top: 10px;
+    width: 65%;
+    font-size: 14px;
+    text-transform: uppercase;
+    height: 35px;
+    font-weight: bold;
+    border: none;
+    color: #dcce84;
+    background-color: rgba(34, 34, 34, 0.88);
+}
+
+/* Стилизация скроллбара для фильтра */
+.block_selectAuthor::-webkit-scrollbar,
+.block_selectGenres::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Стилизация области за индикатором прокрутки */
+.block_selectAuthor::-webkit-scrollbar-track,
+.block_selectGenres::-webkit-scrollbar-track {
+    background: rgba(103, 97, 107, 0.70);
+    ;
+}
+
+/* Стилизация индикатора прокрутки */
+.block_selectAuthor::-webkit-scrollbar-thumb,
+.block_selectGenres::-webkit-scrollbar-thumb {
+    width: 5px;
+    height: 10%;
+    background-color: rgba(61, 59, 64, 0.55);
+    border-radius: 5px;
+}
+
+.block_selectYearRange {
+    margin-top: -10px;
+}
+
+
+
+#selectYearRange::-webkit-slider-thumb {
+    background-color: #333c;
+}
+
+
+
+input[type=range] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
+}
+
+    input[type=range]::-webkit-slider-container {
+        color: red;
+    }
+
+    input[type=range]::-webkit-slider-runnable-track {
+        height: 5px;
+        outline: none;
+        background: rgba(103, 97, 107, 0.70);
+        ;
+    }
+
+    input[type=range]::-webkit-slider-thumb {
+        outline: none;
+        background-color: rgba(61, 59, 64, 0.55);
+        cursor: pointer;
+        width: 13px;
+        height: 16px;
+        margin-top: -6px;
+        -webkit-appearance: none;
+    }
+
+.bookCover a > p {
+    white-space: nowrap;
+    margin-top: -0px;
+    padding: 0 10px;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Многоточие */
+}
+
+.mobVersFilter {
+    width: 100%;
+    display: block;
+    top: 10em;
+    margin: 0 auto;
+    z-index: 5;
+    position: absolute;
+    background: rgba(245, 245, 245, 0.93);
+}
+
+.block_pagination {
+    width: 103%;
+}
+
+.pagination {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 2px;
+}
+
+.page-item {
+    cursor: pointer;
+    height: 25px;
+    min-width: 23px;
+    line-height: 25px;
+    background: whitesmoke;
+    margin-right: 15px;
+    padding: 2px;
+    text-align: center;
+    border: #333 solid 2px;
+    border-radius: 0.2em;
+    font-weight: bold;
+}
+
+.page-link {
+    text-decoration: none;
+    color: #333;
+    padding: 10px;
+    margin: -5px;
+}
+
+.toStartEnd:hover,
+.page-item:hover {
+    box-shadow: #333333 0 0 5px;
+}
+
+.active_page {
+    background: #333;
+}
+
+    .active_page:hover {
+        color: #ffee9a;
+    }
+
+    .active_page > a {
+        color: #dcce84;
+    }

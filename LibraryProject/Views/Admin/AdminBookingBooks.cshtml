@@ -1,0 +1,120 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutAdminPanel.cshtml";
+}
+
+@using LibraryProject.ViewModels;
+@model ApplicationContext;
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Бронь книг</title>
+    <link href="~/css/styleAdminCatalog.css" rel="stylesheet" />
+    <link href="~/css/toast.css" rel="stylesheet" />
+    <style>
+        .btnLend {
+            cursor: pointer;
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 100%;
+            width: 100%;
+            font-size: 14px;
+            text-transform: uppercase;
+            font-weight: bold;
+            border: none;
+            color: #dcce84;
+            background-color: rgba(34, 34, 34, 0.88);
+        }
+
+        button:disabled{
+            cursor: not-allowed;
+            background-color: #333c;
+        }
+    </style>
+</head>
+<body>
+    <div class="titleTable">
+        <h1 style="margin-left: 15px; color: #333;">Бронь книг</h1>
+    </div>
+    @*<div class="block_toolsPanel" style="width: 150px;">
+        <button style="width: 100%; border:none; text-align: left; padding-left: 15px; border-radius: 0.5em" id="toolPanel_Add"><b>Добавить</b><img src="~/images/add-list.svg" /></button>
+    </div>*@
+
+    <div class="block_table" style="        justify-content: left;
+        max-height: 500px;
+        overflow: auto;
+">
+        <table>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th style="max-width: 150px;">Читатель</th>
+                    <th style="max-width: 150px;">Книга</th>
+                    <th style="max-width: 150px;">Дата бронирования</th>
+                    <th style="max-width: 150px;">Дата истечения брони</th>
+                    <th>Действие</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var record in Model.BookingRecords.ToList()) {
+                    // получим читателя записи, для формирования его фамилии и инициалов
+                    Readers reader = Model.Readers.Select(o => o).Where(r => r.Id == record.IdReader).ToList()[0];
+                    string readerSurnameNP = reader.SurnameReader + " " + reader.NameReader.Substring(0, 1) + ". " + reader.PatronymicReader.Substring(0, 1) + ".";
+
+
+                    <tr id="@record.Id">
+                        <td>@record.Id</td>
+                        <td>@readerSurnameNP</td>
+                        <td>@Model.Books.Select(o => o).Where(b => b.Id == record.IdBook).ToList()[0].Title</td>
+                        <td>@record.BookingDate.Date.ToString("dd.MM.yyyy")</td>
+                        <td>@record.DateOfCompletion.Date.ToString("dd.MM.yyyy")</td>
+                        <td style="position: relative">
+                            @if (Model.Books.Select(o => o).Where(b => b.Id == record.IdBook).ToList()[0].Copies.AmountFreeCopies > 0) {
+                                <button class="btnLend" id="@record.Id">Выдать</button>
+                            }
+                            else {
+                                <button class="btnLend" id="@record.Id" disabled>Выдать</button>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+       
+    </div>
+    <script src="~/js/jquery-3.5.1.min.js"></script>
+    <script src="~/js/toast.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $(".btnLend").on("click", function (e) {
+
+                let postData = new FormData();
+                postData.append("id", e.target.id);
+
+                $.ajax({
+                    url: "/Admin/AdminBookingBooks",
+                    dataType: 'script',
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    data: postData,
+                    type: 'post'
+                })
+
+                Toast.add({
+                    text: 'Выдача прошла успешно!',
+                    color: '#28a745',
+                    autohide: true,
+                    delay: 5000
+                });
+                
+            });
+
+        });
+    </script>
+</body>
+</html>

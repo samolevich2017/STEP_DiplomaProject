@@ -1,0 +1,76 @@
+﻿@model LibraryProject.Models.Readers;
+@using LibraryProject.ViewModels;
+@using LibraryProject.Models;
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Кабинет</title>
+    <link rel="stylesheet" href="~/css/style.css">
+    <link rel="stylesheet" href="~/css/styleBooks.css">
+    <link rel="stylesheet" href="~/css/styleAuthorization.css">
+    <link rel="stylesheet" href="~/css/styleCabinet.css">
+    <meta name="viewport" content="width=device-width">
+</head>
+<body>
+    <div class="container">
+        <div class="block_UserProfile">
+            <div class="block_headerProfile">
+                <div class="block_kabLogo">
+                    <img src="~/img/cabinet/cab_logo.png" alt="Кабинет" />
+                </div>
+                <div class="block_avatar">
+                    <img id="user_avatar" src="@BooksViewModel.CreateScrAttrForImg(Model.PhotoReaderUrl)" alt="Avatar">
+                </div>
+                <div class="block_info_user">
+                    <h3 id="user_surnameNP">@Model.NameReader @Model.SurnameReader @Model.PatronymicReader</h3>
+                    <p><b>E-mail: </b><span id="user_email">@Model.EmailReader</span></p>
+                    <p><b>Логин: </b><span id="user_login">@Model.LoginReader</span></p>
+                    <p><b>Номер билета: </b><span id="user_idTicket">@Model.Id</span></p>
+                </div>
+                <div class="block_info_books">
+                    <h3>Статистика</h3>
+                    <p><b>Сейчас читаю: </b><span id="user_isReading">@ViewBag.IsReadingCount</span> книги</p>
+                    <p><b>Прочитано: </b><span id="user_read">@ViewBag.ReadCount</span> книг</p>
+                    <p><b>В ожидании: </b><span id="user_bookPending">@ViewBag.PendingCount</span> книг</p>
+                </div>
+            </div>
+            <div class="block_tabsProfile" id="tabs">
+                <nav class="tabs_items">
+                    <a id="btn_MyBooks">Мои книги</a>
+                    <a id="btn_Security">Безопасность</a>
+                    <a href="">Моя статистика</a>
+                </nav>
+                <a class="btnLogOut" asp-controller="Cabinet" asp-action="LogOutCabinet">ВЫЙТИ</a>
+            </div>
+            <div class="openTabs">
+                <button class="btnOpenTabs" id="btnOpenTabs"></button>
+            </div>
+            <div class="tabs_body">
+                <h2 style="color: #333c; text-align: center;">Здравствуйте, @Model.NameReader!</h2>
+            </div>
+        </div>
+    </div>
+    <script src="~/js/jquery-3.5.1.min.js"></script>
+    <!-- Скрипт обработки клика по кнопке открытия табов (для моб. версии) -->
+    <script src="~/js/cabinetScript.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#btn_MyBooks").on("click", function (e) {
+                e.preventDefault();
+                $.get("@Url.Action("MyBooks")", function (data) {
+                    $('.tabs_body').html(data);
+                });
+            });
+
+            $("#btn_Security").on("click", function (e) {
+                e.preventDefault();
+                $.get("@Url.Action("Security")", function (data) {
+                    $('.tabs_body').html(data);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

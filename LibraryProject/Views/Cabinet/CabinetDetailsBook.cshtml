@@ -1,0 +1,56 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model LibraryProject.ViewModels.BooksEditViewModel
+@using LibraryProject.ViewModels;
+<link href="~/css/styleAdminCatalog.css" rel="stylesheet" />
+<link href="~/css/stylePopup.css" rel="stylesheet" />
+
+<div class="popup_title"><span id="spanTitle">@Model.SelectedBook.Title</span> | <span id="spanAuthor"></span></div>
+<form method="post" enctype="multipart/form-data">
+    <div class="block_coverImg">
+        <img src="@BooksViewModel.CreateScrAttrForImg(Model.SelectedBook.CoverImgUrl)" alt="фото">
+        <input type="file" accept=".jpg, .jpeg, .png, .svg" class="inputFile" id="formImage" name="uploadFile" disabled>
+        <div class="block_btnFile">
+            <button class="btnFile">Загрузить</button>
+        </div>
+    </div>
+    <div class="block_characteristics">
+        <h3>Свойства книги</h3>
+        <ul>
+            <li>Название<sub>............................</sub><span><input type="text" id="inputBookTitle" name="inputBookTitle" value="@Model.SelectedBook.Title" disabled required></span></li>
+            <li>Автор<sub>...................................</sub><span><input type="text" id="inputBookAuthor" name="inputBookAuthor" value="" disabled required></span></li>
+            <li class="li_genres">
+                Жанр<sub>....................................</sub>
+                <ul class="list_genresBook detailsGenres">
+                    @foreach (var genre in ViewBag.Genres) {
+                        <li>@genre</li>
+                    }
+                </ul>
+            </li>
+            <li>
+                Год выпуска<sub>......................</sub><span>
+                    <select name="selectBookYear" id="selectBookYear" disabled>
+                        @for (int i = 2005; i <= 2021; i++) {
+                            int value;
+                            int.TryParse(string.Join("", Model.SelectedBook.YearOfIssue.Where(c => char.IsDigit(c))), out value);
+                            bool flag = i == value ? true : false;
+                            <option name="@i" value="@i" selected="@flag">@i</option>
+                        }
+                    </select>
+                </span>
+            </li>
+            <li>Код книги<sub>...........................</sub><span>@Model.SelectedBook.Id</span></li>
+        </ul>
+        <div class="block_description">
+            <h3>О книге</h3>
+            <textarea name="inputBookDescription" id="inputBookDescription" disabled>@Model.SelectedBook.DescriptionBook</textarea>
+        </div>
+
+    </div>
+</form>
+<div class="block_btnGroup">
+    <button class="btnCancel">Отмена</button>
+</div>

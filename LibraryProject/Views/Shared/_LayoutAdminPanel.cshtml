@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Админ панель - @ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/style.css">
+    <link rel="stylesheet" href="~/css/styleCabinet.css">
+    <link rel="stylesheet" href="~/css/styleForAdminPanel.css">
+    <script src="~/js/pace.min.js"></script>
+    <link href="~/css/center-atom.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="content">
+
+        <div class="block_header">
+            <div class="block_data">
+                <p class="adminFio">Администратор: <span>Иванов Иван Иванович</span></p>
+                <p class="adminCode">Код сотрудника: <span>9</span></p>
+            </div>
+        </div>
+
+        <!-- Табы для разных областей управления -->
+        <div class="block_tabsProfile tabsAdmin" id="tabs">
+            <div class="titleTabs">Управление</div>
+            <nav class="tabs_items">
+                <a asp-controller="Admin" asp-action="AdminCatalog">Каталог</a>
+                <a asp-controller="Admin" asp-action="AdminLendingBooks">Выдачи книг</a>
+                <a asp-controller="Admin" asp-action="AdminBookingBooks">Бронь книг</a>
+                <a asp-controller="Admin" asp-action="AdminLibrarians">Библиотекари</a>
+                <a asp-controller="Admin" asp-action="AdminReaders">Читатели</a>
+                <a asp-controller="Admin" asp-action="AdminStatistic">Статистика</a>
+                <a asp-controller="Admin" asp-action="AdminReports">Отчеты</a>
+            </nav>
+            <a class="btnLogOutAdmin" asp-controller="Home" asp-action="Index">Выйти</a>
+        </div>
+
+        <div class="container" style="margin-left: 20.5%; width: 90%;">
+            @RenderBody()
+        </div>
+
+    </div>
+    <script src="~/js/jquery-3.5.1.min.js"></script>
+</body>
+</html>

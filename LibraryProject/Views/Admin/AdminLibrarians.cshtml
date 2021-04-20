@@ -1,0 +1,50 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutAdminPanel.cshtml";
+}
+
+@using LibraryProject.ViewModels;
+@model ApplicationContext;
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Библиотекари</title>
+    <link href="~/css/styleAdminCatalog.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="titleTable">
+        <h1 style="margin-left: 15px; color: #333;">Библиотекари</h1>
+    </div>
+    <div class="block_toolsPanel" style="width: 150px;">
+        <button style="width: 100%; border:none; text-align: left; padding-left: 15px; border-radius: 0.5em" id="toolPanel_Add"><b>Добавить</b><img src="~/images/add-list.svg" /></button>
+    </div>
+
+    <div class="block_table" style="justify-content:left;">
+        <table>
+            <thead>
+                <tr>
+                    <th>Спец. код</th>
+                    <th style="max-width: 150px;">Фамилия</th>
+                    <th style="max-width: 150px;">Имя</th>
+                    <th style="max-width: 150px;">Отчество</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var person in Model.Librarians) {
+
+                    <tr id="@person.CodeLibrarian">
+                        <td>@person.Id</td>
+                        <td>@person.SurnameLibrarian</td>
+                        <td>@person.NameLibrarian</td>
+                        <td>@person.PatronymicLibrarian</td>
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+    </div>
+    <script src="~/js/jquery-3.5.1.min.js"></script>
+</body>
+</html>

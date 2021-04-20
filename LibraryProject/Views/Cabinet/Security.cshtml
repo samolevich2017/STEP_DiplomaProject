@@ -1,0 +1,219 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model Readers;
+<style>
+    .block_security {
+        padding: 0px 30px 30px 30px;
+        margin-top: -20px;
+    }
+
+    .form_extInformation {
+        margin-top: -40px;
+    }
+
+    .formChangePassword {
+        margin-top: -55px;
+    }
+
+    .form_extInformation {
+        font-size: 16px;
+    }
+
+        .form_extInformation input {
+            margin-bottom: 10px;
+        }
+
+    .formInp {
+        width: 280px;
+        height: 30px;
+        line-height: 30px;
+        padding: 5px 0 5px 15px;
+        outline: none;
+        font-size: 14px;
+        border: none;
+        border-radius: 60px;
+        color: #333c;
+        font-weight: bold;
+    }
+
+        .formInp:focus {
+            border: #95caf9 solid 1px;
+            box-shadow: #95caf9 0 0 10px;
+        }
+
+    .btnSaveChange {
+        cursor: pointer;
+        text-transform: uppercase;
+        margin-top: 3px;
+        width: 120px;
+        height: 35px;
+        border-radius: 25px;
+        background-color: #95caf9;
+        color: #fff;
+        border: none;
+        outline: none;
+        margin-bottom: 10px;
+    }
+
+        .btnSaveChange:hover {
+            box-shadow: #95caf9 0 0 10px;
+        }
+
+    .invalid {
+        box-shadow: #ff0000 0 0 10px;
+    }
+</style>
+<style>
+    .toast {
+        margin-top: 30%;
+        max-width: 350px;
+        overflow: hidden;
+        font-size: 0.875rem;
+        background-color: rgba(255, 255, 255, 0.5);
+        background-clip: padding-box;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 0.25rem;
+        box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px);
+        display: none;
+        position: relative;
+        padding: 0.75rem 2rem 0.75rem 0.75rem;
+        overflow-wrap: break-word;
+        word-break: break-word;
+    }
+
+        .toast:not(:last-child) {
+            margin-bottom: 0.75rem;
+        }
+
+    .toast_show {
+        display: block;
+    }
+
+    .toast__close {
+        position: absolute;
+        top: 0;
+        right: 10px;
+        padding: 0;
+        background-color: transparent;
+        border: 0;
+        cursor: pointer;
+        float: right;
+        font-size: 1.5rem;
+        font-weight: 700;
+        line-height: 1;
+        color: #000;
+        text-shadow: 0 1px 0 #fff;
+        opacity: 0.6;
+        appearance: button;
+        margin: 0;
+        font-family: inherit;
+        border-radius: 0;
+    }
+
+    input:not([type="checkbox"], [type="password"]) {
+        display: block;
+        font-size: 1rem;
+        margin-bottom: .5rem;
+    }
+
+</style>
+<div class="block_security">
+    <div class="block_changePassword">
+        <h6>Сменить пароль</h6>
+        <form action="#" class="formChangePassword">
+            <input type="password" class="formInp currPass" placeholder="Старый пароль"><br>
+            <input type="password" class="formInp newPass" placeholder="Новый пароль"><br>
+            <input type="password" class="formInp newPassConfirm" placeholder="Новый пароль"><br>
+            <button type="button" class="btnSaveChange btnChangePassword">Сохранить</button>
+        </form>
+    </div>
+    <div class="block_extendInformation">
+        <h6>Дополнительная информация</h6>
+        <form action="#" class="form_extInformation">
+            <input type="text" class="formInp" id="adress" placeholder="Адрес" value="@Model.AdressReader"><br>
+            <input type="tel" class="formInp" id="phoneNumber" placeholder="Телефон" value="@Model.PhoneNumberReader"><br>
+            <button type="button" class="btnSaveChange btnChangeExtInformation">Сохранить</button>
+        </form>
+    </div>
+</div>
+<script src="~/js/jquery-3.5.1.min.js"></script>
+<script src="~/js/toast.js"></script>
+<script src="~/js/jquery.maskedinput.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".btnChangePassword").on("click", function () {
+            if ($(".newPass").val() === $(".newPassConfirm").val()) {
+
+                if ($(".newPass").hasClass("invalid") || $(".newPassConfirm").hasClass("invalid")) {
+                    $(".newPassConfirm").removeClass("invalid");
+                    $(".newPass").removeClass("invalid");
+                }
+                    
+
+                let formData = new FormData();
+                formData.append("currentPassword", $(".currPass").val());
+                formData.append("newPassword", $(".newPass").val());
+                formData.append("confirmNewPassword", $(".newPassConfirm").val());
+
+                $.ajax({
+                    url: "/Cabinet/ChangePassword",
+                    dataType: 'script',
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    data: formData,
+                    type: 'post'
+                });
+
+                Toast.add({
+                    text: 'Пароль успешно изменен',
+                    color: '#28a745',
+                    autohide: true,
+                    delay: 5000
+                });
+
+            } else {
+                $(".newPass").addClass("invalid");
+                $(".newPassConfirm").addClass("invalid");
+                return;
+            }
+
+        });
+
+        $(".btnChangeExtInformation").on("click", function () {
+            let formData = new FormData();
+            if ($("#adress").val() !== null)
+                formData.append("adress", $("#adress").val());
+
+            if ($("#phoneNumber").val() !== null)
+                formData.append("phone", $("#phoneNumber").val());
+
+            $.ajax({
+                url: "/Cabinet/ChangeExtInformation",
+                dataType: 'script',
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: formData,
+                type: 'post'
+            });
+
+            Toast.add({
+                text: 'Данные успешно сохранены',
+                color: '#28a745',
+                autohide: true,
+                delay: 5000
+            });
+
+        });
+
+        //Использование параметра completed
+        $("#phoneNumber").mask("+38(999) 999-9999", {
+
+        });
+    });
+</script>

@@ -1,0 +1,66 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Views/Shared/_LayoutAdminPanel.cshtml";
+}
+@{
+}
+<style>
+    body {
+        overflow: hidden;
+    }
+
+    .block_chart {
+        position: relative;
+        height: 500px;
+        width: 1100px;
+        max-height: 500px;
+        max-width: 1100px;
+    }
+
+        .block_chart img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            margin-left: 4%;
+        }
+
+    .block_lock {
+        position: absolute;
+        display: flex;
+        z-index: 100;
+        width: 100%;
+        height: 100%;
+        background-color: rgb(61 59 64 / 47%);
+        margin-top: -580px;
+        margin-left: -25px;
+        justify-content: center;
+    }
+
+        .block_lock img {
+            height: 500px;
+            display: flex;
+            margin-left: -25%;
+            margin-top: 5%;
+        }
+
+    .title_lock {
+        position: absolute;
+        text-align: center;
+        margin-top: 35%;
+        font-size: 56px;
+        margin-left: -17%;
+        color: #fff;
+        text-shadow: 0 0 3px #000, 0 0 10px #333;
+    }
+</style>
+<div style="overflow: hidden;">
+    <div class="block_chart">
+
+    </div>
+    <div class="block_lock">
+        <img src="~/images/software_innovation1.gif" alt="">
+        <h1 class="title_lock">В разработке...</h1>
+    </div>
+</div>

@@ -1,0 +1,44 @@
+﻿@{ 
+    Layout = null; // для этой страницы не нужно отображать мастер страницу
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Вход в систему</title>
+    <link rel="stylesheet" href="~/css/style.css">
+    <link rel="stylesheet" href="~/css/styleForAdminPanel.css">
+    <link rel="stylesheet" href="~/css/styleAuthorization.css">
+</head>
+<body>
+    <div class="content">
+        <div class="container">
+            <div class="block_panelAuth">
+                <div class="panelAuth_header">
+                    <h3>Вход в систему</h3>
+                </div>
+                <div class="panelAuth_body">
+                    <p>Пожалуйста, войдите в систему, чтобы получить доступ к админ. панели:</p>
+                    <form method="post" class="form formLogAdmin" asp-controller="Admin" asp-action="AdminCatalog" style="margin-top: 15px;">
+                        <div class="fields">
+                            <div class="field_Login fieldsInp">
+                                <span>&#9997;</span>
+                                <input type="text" name="surnameNP" placeholder="Иванов Иван Иванович">
+                            </div>
+                            <div class="field_Password fieldsInp">
+                                <span>&#128273;</span>
+                                <input type="password" name="password" placeholder="Пароль" />
+                            </div>
+                        </div>
+                        <div class="btnLogIn btnLogAdmin">
+                            <button class="btnLog" type="submit">Войти</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

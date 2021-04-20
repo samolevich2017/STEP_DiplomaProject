@@ -1,0 +1,31 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<link href="~/css/toast.css" rel="stylesheet" />
+<form action="" id="dragDropImportForm">
+    <input type="file" accept=".json" id="inputImportFile">
+</form>
+<div class="block_messageAndImgCloud">
+    <img src="~/images/dragdropcloud.png" alt="">
+    <div class="block_PsevdoBtnUpload">Загрузить</div>
+    <div class="block_textDragDrop">
+        <p>или</p>
+        <p>перетащите JSON-файл в эту область</p>
+    </div>
+</div>
+<div id="popup_importBooks_Confirm" class="popup">
+    <div class="popup_body">
+        <div class="popup_content" style="width: 60%" ;>
+            <a href="#" class="popup_close close-popup">X</a>
+            <div class="content-Confirm">
+
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/js/popup.js"></script>
+<script src="~/js/toast.js"></script>
+<script src="~/js/popupEditBookScript.js"></script>
+<script src="~/js/popupImportBooksScript.js"></script>

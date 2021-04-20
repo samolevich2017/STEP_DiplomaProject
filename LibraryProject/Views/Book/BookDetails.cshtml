@@ -1,0 +1,140 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using LibraryProject.ViewModels;
+@model Books;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/style.css" />
+    <link rel="stylesheet" href="~/css/styleBookDetails.css"/>
+    <link rel="stylesheet" href="~/css/styleAuthorization.css"/>
+    <link rel="stylesheet" href="~/css/styleBook.css"/>
+    <link rel="stylesheet" href="~/css/stylePopup.css"/>
+    <link rel="stylesheet" href="~/css/toast.css"/>
+    <style>
+        html,
+        body{
+            overflow: auto;
+        }
+
+        footer{
+            margin-top: 5%;
+        }
+
+        .block_coverImg>img{
+            width: 100%;
+            height: 91%;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="block_detailsBook">
+            <div class="title"><a asp-controller="Book" asp-action="BookList" asp-route-page="@ViewBag.PageNumber">&#8678;</a> @Model.Title | @Model.Author.SurnameNp</div>
+            <div class="block_coverImg">
+                <img src="@BooksViewModel.CreateScrAttrForImg(@Model.CoverImgUrl)" alt="фото">
+                @{
+                    string availableStatus = "";
+                    string classStatusAvailable = "bookAvailableTrue";
+                    if (Model.Copies.AmountFreeCopies > 0) {
+                        availableStatus = "Доступна";
+                    }
+                    else {
+                        availableStatus = "Недоступна";
+                        classStatusAvailable = "bookAvailableFalse";
+                    } // if
+                }
+                <div class="bookAvailable @classStatusAvailable bookState">
+                    <span>@availableStatus</span>
+                </div>
+            </div>
+
+            <div class="block_characteristics">
+                <div class="block_btnReservation">
+                    <button class="btnReservation">Забронировать</button>
+                </div>
+                <ul>
+                    <li>Название<sub>............................</sub><span>@Model.Title</span></li>
+                    <li>Автор<sub>...................................</sub><span>@Model.Author.SurnameNp</span></li>
+                    <li>
+                        Жанр<sub>....................................</sub>
+                        @{
+                            foreach (string item in @ViewBag.Genres) {
+                                <span>@item </span>
+                            }
+                        }
+                    </li>
+                    <li>Год выпуска<sub>......................</sub><span>@Model.YearOfIssue</span></li>
+                    <li>Код книги<sub>...........................</sub><span>@Model.Id</span></li>
+                </ul>
+                <div class="block_description">
+                    <h2>О книге</h2>
+                    <p>@Html.Raw(@Model.DescriptionBook)</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div id="popup_UnAuthorizeUser" class="popup">
+        <div class="popup_body">
+            <div class="popup_content" style="height: 390px;">
+                <a href="#" class="popup_close close-popup">X</a>
+                <div class="content-UnAuthorizeUser">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="popup_BookingBook" class="popup">
+        <div class="popup_body">
+            <div class="popup_content">
+                <a href="#" class="popup_close close-popup">X</a>
+                <div class="content-BookingBook">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script src="~/js/jquery-3.5.1.min.js"></script>
+<script src="~/js/popup.js"></script>
+<script src="~/js/toast.js"></script>
+<script>
+
+    // возвращает куки с указанным name,
+    // или undefined, если ничего не найдено
+    function getCookie(name) {
+        let matches = document.cookie.match(new RegExp(
+            "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+        ));
+        return matches ? decodeURIComponent(matches[1]) : undefined;
+    }
+
+    $(document).ready(function () {
+        let popupUnAuthorize = document.getElementById("popup_UnAuthorizeUser");
+        let popupBookingBook = document.getElementById("popup_BookingBook");
+
+        $(".btnReservation").on("click", function (e) {
+            if (!getCookie("authorizeUserCode")) {
+                e.preventDefault();
+                $.get("@Url.Action("UnAuthorizeTryBooking")", function (data) {
+                    $('.content-UnAuthorizeUser').html(data);
+                });
+                popupOpen(popupUnAuthorize);
+            } else {
+                e.preventDefault();
+                $.get("@Url.Action("BookingBook")", {id : @Model.Id}, function (data) {
+                    $('.content-BookingBook').html(data);
+                });
+                popupOpen(popupBookingBook);
+            }
+        });
+    });
+
+</script>

@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/style.css" />
+    <link rel="shortcut icon" href="~/favicon.ico" type="image/x-icon" />
+    <script src="~/js/pace.min.js"></script>
+    <link href="~/css/center-atom.css" rel="stylesheet" />
+</head>
+<body>
+
+    <!-- Оболочка -->
+    <div class="wrapper">
+        <!-- Контент -->
+        <header class="header">
+            <div class="container">
+                <div class="header__body">
+                    <a asp-controller="Home" asp-action="Index" class="header__logo">
+                        <img src="~/img/Logotype.png" alt="" />
+                    </a>
+
+                    <div class="header__burger">
+                        <span></span>
+                    </div>
+                    <nav class="header__menu">
+                        <ul class="header__list">
+                            <li class="headerLink__li">
+                                <a asp-controller="Home" asp-action="Index" class="header__link">Главная</a>
+                            </li>
+                            <li class="headerLink__li">
+                                <a asp-controller="Book" asp-action="BookList" class="header__link">Книги</a>
+                            </li>
+                            <li class="headerLink__li">
+                                <a asp-controller="Home" asp-action="Contacts" class="header__link">Контакты</a>
+                            </li>
+                            <li class="headerLink__li">
+                                <a asp-controller="Home" asp-action="AboutUs" class="header__link">О нас</a>
+                            </li>
+                            <li>
+                                <a asp-controller="Cabinet" asp-action="Cabinet" class="btnAuth header__link">Кабинет</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </header>
+        <div class="content"> 
+                @RenderBody()
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__body">
+                <div class="footer__links">
+                    <ul class="footer__list">
+                        <li class="headerLink__li">
+                            <a asp-controller="Home" asp-action="Index" class="footer__link">Главная</a>
+                        </li>
+                        <li class="headerLink__li">
+                            <a asp-controller="Book" asp-action="BookList" class="footer__link">Книги</a>
+                        </li>
+                        <li class="headerLink__li">
+                            <a asp-controller="Home" asp-action="Contacts" class="footer__link">Контакты</a>
+                        </li>
+                        <li class="headerLink__li">
+                            <a asp-controller="Home" asp-action="AboutUs" class="footer__link">О нас</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="footer__logo">
+                    <a href="#">
+                        <img src="~/img/Logotype.png" alt="">
+                    </a>
+                    <p>Дипломный проект<br/>Выполнил: Самолевич Иван</p>
+                    <p>&laquo;&copy; Copyright 2021&raquo;</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Подключаем jQuery -->
+    <script src="~/js/jquery-3.5.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.header__burger').click(function () {
+                $('.header__burger, .header__menu').toggleClass('active');
+                $('body').toggleClass('lock');
+            });
+        });
+    </script>
+</body>
+</html>

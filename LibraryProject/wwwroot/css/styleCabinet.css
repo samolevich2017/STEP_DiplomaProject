@@ -1,0 +1,404 @@
+﻿.content{
+    padding-top: 80px;
+}
+
+.block_UserProfile{
+    position: relative;
+    height: 670px;
+    box-shadow: dimgray 0 0 8px;
+    background-color: #f0f0f0;
+    color: #333c;
+    display: grid;
+    grid-template-columns: 300px 1fr 1fr;
+    grid-template-rows: 150px 1fr;
+}
+
+.block_headerProfile{
+    display: grid;
+    grid-template-columns: 300px 160px 1fr 1fr;
+    z-index: 3;
+    position: relative;
+    width: 100%;
+    height: 150px;
+    overflow: hidden;
+    border-bottom: #757575 solid 2px;
+    grid-row: 1;
+    grid-column-start: 1;
+    grid-column-end: 4;
+}
+
+.block_kabLogo{
+    position: relative;
+    grid-column-start: 1;
+    grid-column-end: 2;
+    padding-top: 10%;
+    padding-left: 1%;
+    border-right: #757575 solid 2px;
+}
+
+.block_kabLogo img{
+    position: absolute;
+    width: 100%;
+}
+
+.block_avatar{
+    position: relative;
+    margin-left: 15px;
+    height: 130px;
+    width: 130px;
+    border: #dcce84 solid 2px;
+    margin-top: 9px;
+    grid-column-start: 2;
+    grid-column-end: 3;
+}
+
+.block_avatar img{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.block_tabsProfile{
+    position: relative;
+    z-index: 2;
+    background-color: #d2d2d2;
+    left: 0;
+    height: 100%;
+    border-right: #757575 solid 2px;
+    grid-row-start: 2;
+    grid-column: 1;
+}
+
+.block_info_user{
+    position: absolute;
+    width: 350px;
+    height: 150px;
+    padding: 0 15px;
+    grid-column-start: 3;
+    grid-column-end: 4;
+}
+
+.block_info_books p,
+.block_info_user p{
+    line-height: 10px;
+}
+
+.block_info_books h3,
+.block_info_user h3{
+    border-bottom: #dcce84 solid 2px;
+    width: 80%;
+}
+
+.block_info_books{
+    position: absolute;
+    padding: 0 15px;
+    width: 300px;
+    height: 150px;
+    margin-top: 1px;
+    grid-column-start: 4;
+    grid-column-end: 5;
+}
+
+.tabs_items{
+    position: absolute;
+    width: 100%;
+}
+
+.tabs_items a{
+    display: block;
+    height: 45px;
+    width: 100%;
+    color: #dcce84;
+    background-color: rgba(34, 34, 34, 0.88);
+    text-decoration: none;
+    font-size: 17px;
+    line-height: 45px;
+    text-align: center;
+    border-bottom: #c0a97a solid 1px;
+    cursor: pointer;
+}
+
+.tabs_items a:hover{
+    color: #ead39d;
+    background-color: #222222;
+}
+
+.tabs_items a:active{
+    color: #c0a97a;
+    background-color: #333333;
+}
+
+.tabs_body{
+    grid-column-start: 2;
+    grid-column-end: 4;
+    height: 100%;
+    font-size: 36px;
+    overflow-y: auto;
+}
+
+@media (max-width: 1060px) {
+
+    .block_UserProfile{
+        grid-template-columns: 300px 1fr 1fr;
+        grid-template-rows: 150px 1fr;
+    }
+
+    .block_kabLogo{
+        display: none;
+    }
+
+    .block_headerProfile{
+        grid-template-rows: 150px;
+        grid-template-columns: 1fr 300px 300px;
+    }
+
+    .block_avatar{
+        margin-left: 80px;
+        grid-column-start: 1;
+        grid-column-end: 2;
+        grid-row-start: 1;
+        grid-row-end: 2;
+    }
+
+    .block_info_user{
+        margin-right: 25px;
+        grid-column-start: 2;
+        grid-column-end: 3;
+        grid-row-start: 1;
+        grid-row-end: 2;
+    }
+
+    .block_info_books{
+        grid-column-start: 3;
+        grid-column-end: 4;
+        grid-row-start: 1;
+        grid-row-end: 2;
+    }
+}
+
+@media (max-width: 910px){
+    .container,
+    .content,
+    .wrapper{
+        width: 100%;
+    }
+
+    .block_UserProfile{
+        width: 100%;
+        margin: 0;
+    }
+}
+
+@media (max-width: 768px){
+
+    .block_UserProfile{
+        position: relative;
+        width: 105%;
+    }
+
+    .block_avatar{
+        display: none;
+    }
+
+    .block_tabsProfile{
+        width: 260px;
+    }
+
+    .header__burger{
+        margin-right: 20px;
+    }
+
+    .footer{
+        width: 108%;
+    }
+}
+
+@media (min-width: 600px){
+    .openTabs{
+        display: none;
+    }
+
+    .block_tabsProfile{
+        display: block;
+    }
+}
+
+@media (max-width: 600px){
+
+    .block_headerProfile{
+        grid-template-rows: 150px 30px 150px;
+        grid-template-columns: 300px;
+        position: relative;
+    }
+
+    .block_avatar{
+        display: block;
+        position: absolute;
+        margin-right: 10px;
+        grid-column-start: 2;
+        grid-column-end: 3;
+    }
+
+    .block_info_user{
+        grid-column-start: 1;
+        grid-column-end: 2;
+        grid-row-start: 1;
+        grid-row-end: 2;
+    }
+
+    .block_info_books{
+        display: none;
+    }
+
+    .block_tabsProfile{
+        margin-top: 30px;
+        display: none;
+        opacity: 0;
+        position: absolute;
+        grid-column-start: 1;
+        grid-column-end: 4;
+        width: 100%;
+
+    }
+
+    .tabs_body{
+        grid-column-start: 1;
+        grid-column-end: 4;
+    }
+
+    .openTabs{
+        display: flex;
+        justify-self: center;
+    }
+
+}
+
+@media (max-width: 525px){
+
+    body{
+        width: 100%;
+    }
+    html{
+        width: 100%;
+    }
+    .block_avatar{
+        display: none;
+    }
+
+    .block_UserProfile{
+        grid-template-columns: 1fr;
+    }
+
+    .container{
+        padding: 0 5px;
+    }
+}
+
+.footer{
+    overflow: hidden;
+}
+
+.openTabs{
+    cursor: pointer;
+    position: absolute;
+    grid-row-start: 2;
+    grid-row-end: 3;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    height: 30px;
+    width: 40px;
+    justify-content: center;
+}
+
+.btnCloseTabs,
+.btnOpenTabs{
+    position: relative;
+    border:none;
+    background: transparent;
+    outline: none;
+    width: 45px;
+    height: 30px;
+}
+
+.btnOpenTabs:before{
+    content: "";
+    position: absolute;
+    top: 9px;
+    left: 3px;
+    width: 23px;
+    height: 5px;
+    border-bottom: #333333 solid 2px;
+    transform: rotate(45deg);
+}
+
+.btnCloseTabs:before{
+    content: "";
+    position: absolute;
+    top: 9px;
+    left: 0px;
+    width: 21px;
+    height: 5px;
+    border-bottom: #333333 solid 2px;
+    transform: rotate(-45deg);
+}
+
+.btnCloseTabs:active,
+.btnOpenTabs:active{
+    border-bottom: #dcd348 solid 2px;
+}
+
+.btnOpenTabs:after{
+    content: "";
+    position: absolute;
+    top: 9px;
+    right: 3px;
+    width: 23px;
+    height: 5px;
+    border-bottom: #333333 solid 2px;
+    transform: rotate(-45deg);
+}
+
+.btnCloseTabs:after{
+    content: "";
+    position: absolute;
+    top: 9px;
+    right: 0px;
+    width: 21px;
+    height: 5px;
+    border-bottom: #333333 solid 2px;
+    transform: rotate(45deg);
+}
+
+.closeTabsBlock{
+    opacity: 0;
+    display: none;
+}
+
+.openTabsBlock{
+    opacity: 1;
+    display: block;
+}
+
+.btnLogOut {
+    bottom: 0;
+    position: absolute;
+    width: 100.5%;
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    border: none;
+    outline: none;
+    font-weight: bold;
+    line-height: 45px;
+    height: 45px;
+    background-color: #4d4d4d;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    color: #d6d6d6;
+}
+
+    .btnLogOut:hover {
+        background-color: #b93a3b;
+        color: whitesmoke;
+    }
