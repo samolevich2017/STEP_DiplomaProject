@@ -44,9 +44,7 @@ namespace LibraryProject.Controllers {
 
 
         public AdminController(IWebHostEnvironment appEnvironment) {
-            context.Readers.ToList().Last().NameReader = "Алена";
-            context.Readers.ToList().Last().SurnameReader = "Глушкова";
-            context.Readers.ToList().Last().PatronymicReader = "Андреевна";
+
             context.SaveChanges();
 
 
